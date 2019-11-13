@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="priceModel"
+            type="com.creative.share.apps.alforat.models.ProductDataModel.Price" />
+    </data>
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text='@{(Double.parseDouble(priceModel.price_value)+Double.parseDouble(priceModel.tax_value))+" "+@string/sar+" "+priceModel.price_title}'
+        android:layout_marginTop="8dp"
+        android:background="@drawable/price_unselected"
+        />
+</layout>

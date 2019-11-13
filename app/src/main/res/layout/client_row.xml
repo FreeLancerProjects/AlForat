@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="client"
+            type="com.creative.share.apps.alforat.models.ClientsDataModel.ClientModel" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        app:cardElevation="3dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="5dp"
+        app:contentPadding="8dp"
+
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/gray1"
+                app:civ_circle_background_color="@color/white"
+                android:src="@drawable/man"
+                />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
+                app:layout_constraintStart_toEndOf="@id/image"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/image"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintWidth_default="wrap"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:text="@{client.client_name}"
+                />
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintWidth_default="wrap"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/mdtp_dark_gray"
+                android:textSize="14sp"
+                android:text="@{client.client_phone}"
+
+
+                />
+
+            <ImageView
+                android:id="@+id/map"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintTop_toBottomOf="@id/tvPhone"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_map"
+                android:tint="@color/colorPrimary"
+                android:padding="5dp"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/map"
+                app:layout_constraintTop_toTopOf="@id/map"
+                android:textColor="@color/mdtp_dark_gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintWidth_default="wrap"
+                android:text='@{client.area_name??@string/un_def}'
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
