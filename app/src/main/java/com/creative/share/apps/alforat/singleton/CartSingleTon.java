@@ -88,4 +88,13 @@ public class CartSingleTon {
     public static List<ItemCartModel.Items> getItemCartModelList() {
         return itemCartModelList;
     }
+
+    public static void setItemCartModelList(List<ItemCartModel.Items> itemCartModelList) {
+        CartSingleTon.itemCartModelList = itemCartModelList;
+    }
+
+    public void updateItem(ItemCartModel.Items items, int pos)
+    {
+        itemCartModelList.set(pos,items);
+    }
 }

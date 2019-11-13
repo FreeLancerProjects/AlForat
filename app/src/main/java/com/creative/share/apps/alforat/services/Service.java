@@ -4,6 +4,7 @@ package com.creative.share.apps.alforat.services;
 import com.creative.share.apps.alforat.models.AreaDataModel;
 import com.creative.share.apps.alforat.models.BillDataModel;
 import com.creative.share.apps.alforat.models.ClientsDataModel;
+import com.creative.share.apps.alforat.models.ItemCartModel;
 import com.creative.share.apps.alforat.models.OfferDataModel;
 import com.creative.share.apps.alforat.models.ProductDataModel;
 import com.creative.share.apps.alforat.models.ReportDataModel;
@@ -15,6 +16,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -87,12 +89,12 @@ public interface Service {
                                           @Query("client_acc_code") String client_acc_code,
                                           @Query("from_date") String from_date,
                                           @Query("to_date") String to_date
-                                          );
+    );
 
     @GET("Api/myReport")
     Call<ReportDataModel> getMyReport(@Header("Authorization") String user_token,
-                                          @Query("from_date") String from_date,
-                                          @Query("to_date") String to_date
+                                      @Query("from_date") String from_date,
+                                      @Query("to_date") String to_date
     );
 
     @GET("Api/offers")
@@ -108,11 +110,15 @@ public interface Service {
     @FormUrlEncoded
     @POST("Api/sales")
     Call<ProductDataModel> getSalesProducts(@Header("Authorization") String user_token,
-                                            @Field("client_id")String client_id,
-                                            @Field("delegate_id_fk")String delegate_id_fk,
-                                            @Field("date")String date
-                                            );
+                                            @Field("client_id") String client_id,
+                                            @Field("delegate_id_fk") String delegate_id_fk,
+                                            @Field("date") String date
+    );
 
+    @POST("Api/addBill")
+    Call<ResponseBody> addBill(@Header("Authorization") String user_token,
+                               @Body ItemCartModel itemCartModel
+    );
 
 
 }

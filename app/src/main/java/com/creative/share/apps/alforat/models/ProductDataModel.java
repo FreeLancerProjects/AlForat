@@ -73,6 +73,8 @@ public class ProductDataModel implements Serializable {
         private String price_value;
         private String tax_value;
         private String price_title;
+        private String price_id;
+
 
         public String getItem_name() {
             return item_name;
@@ -88,6 +90,10 @@ public class ProductDataModel implements Serializable {
 
         public String getPrice_title() {
             return price_title;
+        }
+
+        public String getPrice_id() {
+            return price_id;
         }
     }
 

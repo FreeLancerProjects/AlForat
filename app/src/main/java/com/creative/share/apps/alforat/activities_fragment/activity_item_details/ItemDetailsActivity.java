@@ -33,8 +33,10 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
     private int bonus = 0;
     private boolean isGeneralOffer = false;
     private double offer = 0.0;
+    private String general_offer_type = null;
     private CartSingleTon cartSingleTon;
     private ProductDataModel.Price price = null;
+
     @Override
     protected void attachBaseContext(Context newBase)
     {
@@ -124,10 +126,36 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
             if (price!=null)
             {
                 ItemCartModel.Items items = new ItemCartModel.Items(productModel.getId_item(),productModel.getItem_name(),productModel.getItem_image(),count,bonus,price.getPrice_value(),price.getTax_value());
+                items.setPrice_id(price.getPrice_id());
+
+                items.setCurrent_amount(productModel.getCurrent());
+
+                if (isGeneralOffer)
+                {
+                    items.setLimit(0);
+                    items.setOffer_value(0);
+                }else
+                    {
+
+                        if (productModel.getProduct_offer()!=null)
+                        {
+                            items.setLimit(Integer.parseInt(productModel.getProduct_offer().getOffer_limit()));
+                            items.setOffer_value(Integer.parseInt(productModel.getProduct_offer().getOffer_value()));
+
+                        }else
+                            {
+                                items.setLimit(0);
+                                items.setOffer_value(0);
+
+                            }
+                    }
+
                 cartSingleTon.addItem(items);
                 Intent intent = getIntent();
                 intent.putExtra("isGeneralOffer",isGeneralOffer);
                 intent.putExtra("offer",offer);
+                intent.putExtra("general_offer_type",general_offer_type);
+
 
                 setResult(RESULT_OK,intent);
                 finish();
@@ -145,10 +173,13 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
         if (productModel.getGeneralaOffer()==null)
         {
             isGeneralOffer = false;
+            general_offer_type = null;
             if (productModel.getProduct_offer()!=null)
             {
                 if (productModel.getProduct_offer().getOffer_type().equals("8"))
                 {
+
+
                     if (count<Integer.parseInt(productModel.getProduct_offer().getOffer_limit()))
                     {
                         bonus=0;
@@ -158,17 +189,29 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
                     {
                         if (count%Integer.parseInt(productModel.getProduct_offer().getOffer_limit())==0)
                         {
-                            int bonus_value = (count/Integer.parseInt(productModel.getProduct_offer().getOffer_limit()))*Integer.parseInt(productModel.getProduct_offer().getOffer_value());
 
-                            if ((bonus_value+count)<productModel.getCurrent())
+                            if (Integer.parseInt(productModel.getProduct_offer().getOffer_limit())!=0)
                             {
-                                bonus = bonus_value;
-                                binding.tvBonus.setText(String.valueOf(bonus));
+                                int bonus_value = (count/Integer.parseInt(productModel.getProduct_offer().getOffer_limit()))*Integer.parseInt(productModel.getProduct_offer().getOffer_value());
 
+                                if ((bonus_value+count)<productModel.getCurrent())
+                                {
+                                    bonus = bonus_value;
+                                    binding.tvBonus.setText(String.valueOf(bonus));
+
+                                }else
+                                {
+                                    Toast.makeText(this,getString(R.string.inv_amount), Toast.LENGTH_SHORT).show();
+                                }
                             }else
-                            {
-                                Toast.makeText(this,getString(R.string.inv_amount), Toast.LENGTH_SHORT).show();
-                            }
+                                {
+                                    bonus=0;
+                                    binding.tvBonus.setText(String.valueOf(bonus));
+
+                                }
+
+
+
 
                         }else
                         {
@@ -187,6 +230,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
             }
         }else
             {
+                general_offer_type = productModel.getGeneralaOffer().getOffer_type();
                 isGeneralOffer = true;
                 bonus=0;
 
@@ -206,6 +250,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
 
     public void setItemData(ProductDataModel.Price price) {
         this.price = price;
+
 
     }
 }

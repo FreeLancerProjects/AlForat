@@ -201,6 +201,7 @@ public class SalesActivity extends AppCompatActivity implements Listeners.BackLi
         itemCartModel.setClient_name(clientModel.getClient_name());
         itemCartModel.setClient_phone(clientModel.getClient_phone());
         itemCartModel.setClient_address(clientModel.getCleint_address());
+        itemCartModel.setArea_id_fk(clientModel.getArea_id_fk());
         Intent intent = new Intent(this, ItemDetailsActivity.class);
         intent.putExtra("data",productModel);
         startActivityForResult(intent,100);
@@ -216,8 +217,11 @@ public class SalesActivity extends AppCompatActivity implements Listeners.BackLi
         {
             boolean isGeneralOffer = data.getBooleanExtra("isGeneralOffer",false);
             double offer = data.getDoubleExtra("offer",0.0);
+            String general_offer_type = data.getStringExtra(" general_offer_type");
             itemCartModel.setGeneralOffer(isGeneralOffer);
             itemCartModel.setGeneral_offer_value(offer);
+            itemCartModel.setGeneral_offer_type(general_offer_type);
+
             itemCartModel.setCart(cartSingleTon.getItemCartModelList());
             itemCartModel.setTotal_tax(cartSingleTon.getTotalItemTax());
 
@@ -230,4 +234,7 @@ public class SalesActivity extends AppCompatActivity implements Listeners.BackLi
 
         }
     }
+
+
+
 }

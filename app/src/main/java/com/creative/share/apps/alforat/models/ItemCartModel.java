@@ -7,11 +7,14 @@ public class ItemCartModel implements Serializable {
 
     private String client_acc_code;
     private String id_client;
+    private String area_id_fk;
+
     private double bill_total_cost;
     private int total_discount;
     private double total_tax;
     private boolean isGeneralOffer;
     private double general_offer_value;
+    private String general_offer_type;
     private String client_name;
     private String client_phone;
     private String client_address;
@@ -31,6 +34,14 @@ public class ItemCartModel implements Serializable {
 
     public String getId_client() {
         return id_client;
+    }
+
+    public String getArea_id_fk() {
+        return area_id_fk;
+    }
+
+    public void setArea_id_fk(String area_id_fk) {
+        this.area_id_fk = area_id_fk;
     }
 
     public void setId_client(String id_client) {
@@ -109,6 +120,14 @@ public class ItemCartModel implements Serializable {
         this.client_address = client_address;
     }
 
+    public String getGeneral_offer_type() {
+        return general_offer_type;
+    }
+
+    public void setGeneral_offer_type(String general_offer_type) {
+        this.general_offer_type = general_offer_type;
+    }
+
     public static class Items implements Serializable
     {
         private String item_id_fk;
@@ -118,6 +137,11 @@ public class ItemCartModel implements Serializable {
         private int item_bouns;
         private String price_value;
         private String tax_value;
+        private int current_amount;
+        private int limit;
+        private int offer_value;
+        private String price_id;
+
 
         public Items() {
         }
@@ -186,6 +210,38 @@ public class ItemCartModel implements Serializable {
 
         public void setTax_value(String tax_value) {
             this.tax_value = tax_value;
+        }
+
+        public int getCurrent_amount() {
+            return current_amount;
+        }
+
+        public void setCurrent_amount(int current_amount) {
+            this.current_amount = current_amount;
+        }
+
+        public int getLimit() {
+            return limit;
+        }
+
+        public void setLimit(int limit) {
+            this.limit = limit;
+        }
+
+        public int getOffer_value() {
+            return offer_value;
+        }
+
+        public void setOffer_value(int offer_value) {
+            this.offer_value = offer_value;
+        }
+
+        public String getPrice_id() {
+            return price_id;
+        }
+
+        public void setPrice_id(String price_id) {
+            this.price_id = price_id;
         }
     }
 }

@@ -38,6 +38,7 @@ public class ClientsDataModel implements Serializable {
 
 
 
+
         public String getId_client() {
             return id_client;
         }
