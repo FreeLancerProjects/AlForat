@@ -1,7 +1,9 @@
 package com.creative.share.apps.alforat.activities_fragment.activity_home.fragments;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.creative.share.apps.alforat.R;
 import com.creative.share.apps.alforat.activities_fragment.activity_home.activity.HomeActivity;
+import com.creative.share.apps.alforat.databinding.DialogLanguageBinding;
 import com.creative.share.apps.alforat.databinding.FragmentProfileBinding;
 import com.creative.share.apps.alforat.interfaces.Listeners;
 import com.creative.share.apps.alforat.models.UserModel;
@@ -61,11 +64,48 @@ public class Fragment_Profile extends Fragment implements Listeners.LogoutListen
         userModel = preferences.getUserData(activity);
         binding.setUserModel(userModel);
         binding.setLogoutListener(this);
+        binding.consLanguage.setOnClickListener(view -> CreateLangDialog());
 
 
 
 
     }
+
+
+    private void CreateLangDialog() {
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
+                .create();
+
+        DialogLanguageBinding binding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.dialog_language, null, false);
+        String lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        if (lang.equals("ar")) {
+            binding.rbAr.setChecked(true);
+        } else {
+            binding.rbEn.setChecked(true);
+
+        }
+        binding.btnCancel.setOnClickListener((v) ->
+                dialog.dismiss()
+
+        );
+        binding.rbAr.setOnClickListener(view -> {
+            dialog.dismiss();
+            new Handler()
+                    .postDelayed(() -> activity.refreshActivity("ar"), 1000);
+        });
+        binding.rbEn.setOnClickListener(view -> {
+            dialog.dismiss();
+            new Handler()
+                    .postDelayed(() -> activity.refreshActivity("en"), 1000);
+        });
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(binding.getRoot());
+        dialog.show();
+    }
+
+
 
 
     @Override

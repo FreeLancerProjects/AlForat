@@ -176,5 +176,10 @@
     <string name="no_name">لا يوجد إسم</string>
     <string name="no_phone">لا يوجد رقم جوال</string>
     <string name="no_address">لا يوجد عنوان</string>
+    <string name="charge_bonds">اذونات شحن</string>
+    <string name="commission">العمولة</string>
+    <string name="shipping_num">رقم الإذن</string>
+    <string name="change_language">تغيير اللغة</string>
+
 
 </resources>

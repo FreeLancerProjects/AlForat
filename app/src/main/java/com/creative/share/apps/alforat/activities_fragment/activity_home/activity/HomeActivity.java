@@ -3,6 +3,7 @@ package com.creative.share.apps.alforat.activities_fragment.activity_home.activi
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -229,13 +230,17 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-    private void refreshActivity(String lang) {
-        preferences.selectedLanguage(this, lang);
-        Paper.book().write("lang", lang);
-        LanguageHelper.setNewLocale(this, lang);
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+    public void refreshActivity(String lang) {
+        new Handler()
+                .postDelayed(() -> {
+                    preferences.selectedLanguage(HomeActivity.this, lang);
+                    Paper.book().write("lang", lang);
+                    LanguageHelper.setNewLocale(HomeActivity.this, lang);
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }, 500);
+
 
     }
     @Override

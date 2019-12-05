@@ -231,6 +231,7 @@ public class SalesActivity extends AppCompatActivity implements Listeners.BackLi
         {
             cartSingleTon.clear();
             binding.tvCount.setText("0");
+            getProducts();
 
         }
     }

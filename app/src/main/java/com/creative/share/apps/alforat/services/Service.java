@@ -3,6 +3,7 @@ package com.creative.share.apps.alforat.services;
 
 import com.creative.share.apps.alforat.models.AreaDataModel;
 import com.creative.share.apps.alforat.models.BillDataModel;
+import com.creative.share.apps.alforat.models.ChargeReportDataModel;
 import com.creative.share.apps.alforat.models.ClientsDataModel;
 import com.creative.share.apps.alforat.models.ItemCartModel;
 import com.creative.share.apps.alforat.models.OfferDataModel;
@@ -118,6 +119,11 @@ public interface Service {
     @POST("Api/addBill")
     Call<ResponseBody> addBill(@Header("Authorization") String user_token,
                                @Body ItemCartModel itemCartModel
+    );
+
+    @GET("Api/shipping")
+    Call<ChargeReportDataModel> getChargeData(@Header("Authorization") String user_token,
+                                              @Query("page") int page
     );
 
 

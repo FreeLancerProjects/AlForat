@@ -21,10 +21,18 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".activities_fragment.activity_cart.CartActivity"
+        <activity android:name=".activities_fragment.activity_charge_details.ChargeDetailsActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             />
+        <activity android:name=".activities_fragment.activity_permissions.PermissionsActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            />
+        <activity
+            android:name=".activities_fragment.activity_cart.CartActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".activities_fragment.activity_item_details.ItemDetailsActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"

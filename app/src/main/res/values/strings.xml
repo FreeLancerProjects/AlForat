@@ -177,7 +177,10 @@
     <string name="no_name">No name</string>
     <string name="no_phone">No phone</string>
     <string name="no_address">No address</string>
-
+    <string name="charge_bonds">Shipping Bonds</string>
+    <string name="commission">Commission</string>
+    <string name="shipping_num">Shipping-num</string>
+    <string name="change_language">Change language</string>
 
 
 </resources>

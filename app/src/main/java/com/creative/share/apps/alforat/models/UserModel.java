@@ -14,6 +14,9 @@ public class UserModel implements Serializable {
     private int madeen;
     private int dayeen;
     private int balance;
+    private double my_orders;
+    private double rating;
+
 
 
 
@@ -60,5 +63,13 @@ public class UserModel implements Serializable {
 
     public int getBalance() {
         return balance;
+    }
+
+    public double getMy_orders() {
+        return my_orders;
+    }
+
+    public double getRating() {
+        return rating;
     }
 }

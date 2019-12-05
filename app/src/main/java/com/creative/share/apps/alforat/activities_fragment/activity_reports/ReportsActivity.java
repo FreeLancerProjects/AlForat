@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.creative.share.apps.alforat.R;
 import com.creative.share.apps.alforat.activities_fragment.activity_client.ClientActivity;
+import com.creative.share.apps.alforat.activities_fragment.activity_permissions.PermissionsActivity;
 import com.creative.share.apps.alforat.activities_fragment.activity_report_details.ReportDetailsActivity;
 import com.creative.share.apps.alforat.databinding.ActivityReportsBinding;
 import com.creative.share.apps.alforat.interfaces.Listeners;
@@ -59,6 +60,11 @@ public class ReportsActivity extends AppCompatActivity implements Listeners.Back
         binding.llMyReport.setOnClickListener(view -> {
             Intent intent = new Intent(this, ReportDetailsActivity.class);
             intent.putExtra("type",2);
+            startActivity(intent);
+        });
+
+        binding.llAllow.setOnClickListener(view -> {
+            Intent intent = new Intent(this, PermissionsActivity.class);
             startActivity(intent);
         });
 
