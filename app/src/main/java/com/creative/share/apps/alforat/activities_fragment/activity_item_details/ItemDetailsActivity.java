@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.creative.share.apps.alforat.interfaces.Listeners;
 import com.creative.share.apps.alforat.language.LanguageHelper;
 import com.creative.share.apps.alforat.models.ItemCartModel;
 import com.creative.share.apps.alforat.models.ProductDataModel;
+import com.creative.share.apps.alforat.share.Common;
 import com.creative.share.apps.alforat.singleton.CartSingleTon;
 
 import java.util.Locale;
@@ -134,6 +136,27 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
                 {
                     items.setLimit(0);
                     items.setOffer_value(0);
+
+                    if (bonus+count<=productModel.getCurrent())
+                    {
+                        cartSingleTon.addItem(items);
+                        Intent intent = getIntent();
+                        intent.putExtra("isGeneralOffer",isGeneralOffer);
+                        intent.putExtra("offer",offer);
+                        intent.putExtra("general_offer_type",general_offer_type);
+
+
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }else
+                    {
+                        Common.CloseKeyBoard(this,binding.edtCount);
+
+                        Common.CreateDialogAlert(this,getString(R.string.inv_amount)+productModel.getCurrent());
+
+                    }
+
+
                 }else
                     {
 
@@ -148,17 +171,29 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
                                 items.setOffer_value(0);
 
                             }
+
+                        if (bonus+count<=productModel.getCurrent())
+                        {
+                            cartSingleTon.addItem(items);
+                            Intent intent = getIntent();
+                            intent.putExtra("isGeneralOffer",isGeneralOffer);
+                            intent.putExtra("offer",offer);
+                            intent.putExtra("general_offer_type",general_offer_type);
+
+
+                            setResult(RESULT_OK,intent);
+                            finish();
+                        }else
+                            {
+
+                                Common.CloseKeyBoard(this,binding.edtCount);
+
+                                Common.CreateDialogAlert(this,getString(R.string.inv_amount)+productModel.getCurrent());
+
+                            }
                     }
 
-                cartSingleTon.addItem(items);
-                Intent intent = getIntent();
-                intent.putExtra("isGeneralOffer",isGeneralOffer);
-                intent.putExtra("offer",offer);
-                intent.putExtra("general_offer_type",general_offer_type);
 
-
-                setResult(RESULT_OK,intent);
-                finish();
 
             }else
                 {
@@ -174,11 +209,15 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
         {
             isGeneralOffer = false;
             general_offer_type = null;
+
             if (productModel.getProduct_offer()!=null)
             {
+                Log.e("22","22");
+
                 if (productModel.getProduct_offer().getOffer_type().equals("8"))
                 {
 
+                    Log.e("33","33");
 
                     if (count<Integer.parseInt(productModel.getProduct_offer().getOffer_limit()))
                     {
@@ -189,19 +228,26 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
                     {
                         if (count%Integer.parseInt(productModel.getProduct_offer().getOffer_limit())==0)
                         {
+                            Log.e("1","1");
 
                             if (Integer.parseInt(productModel.getProduct_offer().getOffer_limit())!=0)
                             {
+                                Log.e("2","2");
+
                                 int bonus_value = (count/Integer.parseInt(productModel.getProduct_offer().getOffer_limit()))*Integer.parseInt(productModel.getProduct_offer().getOffer_value());
 
-                                if ((bonus_value+count)<productModel.getCurrent())
+                                if ((bonus_value+count)<=productModel.getCurrent())
                                 {
+                                    Log.e("3","3");
+
                                     bonus = bonus_value;
                                     binding.tvBonus.setText(String.valueOf(bonus));
 
                                 }else
                                 {
-                                    Toast.makeText(this,getString(R.string.inv_amount), Toast.LENGTH_SHORT).show();
+                                    Common.CloseKeyBoard(this,binding.edtCount);
+
+                                    Common.CreateDialogAlert(this,getString(R.string.inv_amount)+productModel.getCurrent());
                                 }
                             }else
                                 {
@@ -230,6 +276,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements Listeners.
             }
         }else
             {
+
                 general_offer_type = productModel.getGeneralaOffer().getOffer_type();
                 isGeneralOffer = true;
                 bonus=0;

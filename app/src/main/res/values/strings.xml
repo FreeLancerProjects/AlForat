@@ -152,7 +152,7 @@
     <string name="ch_item">Choose item</string>
     <string name="ch_center">Choose center cost</string>
     <string name="ch_price">Choose price</string>
-    <string name="inv_amount">Invalid amount</string>
+    <string name="inv_amount">Invalid amount ,available amount is: </string>
     <string name="in_tax">invalid tax</string>
     <string name="ch_disc">Choose discount</string>
     <string name="un_def">Undefined</string>

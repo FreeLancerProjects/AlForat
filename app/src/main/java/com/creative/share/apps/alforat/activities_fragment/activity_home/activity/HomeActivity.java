@@ -1,9 +1,12 @@
 package com.creative.share.apps.alforat.activities_fragment.activity_home.activity;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +21,26 @@ import com.creative.share.apps.alforat.R;
 import com.creative.share.apps.alforat.activities_fragment.activity_home.fragments.Fragment_Bills;
 import com.creative.share.apps.alforat.activities_fragment.activity_home.fragments.Fragment_Main;
 import com.creative.share.apps.alforat.activities_fragment.activity_home.fragments.Fragment_Profile;
+import com.creative.share.apps.alforat.activities_fragment.activity_permissions.PermissionsActivity;
 import com.creative.share.apps.alforat.activities_fragment.activity_sign_in.SignInActivity;
 import com.creative.share.apps.alforat.databinding.ActivityHomeBinding;
 import com.creative.share.apps.alforat.language.LanguageHelper;
 import com.creative.share.apps.alforat.models.UserModel;
 import com.creative.share.apps.alforat.preferences.Preferences;
+import com.creative.share.apps.alforat.remote.Api;
 import com.creative.share.apps.alforat.share.Common;
+import com.creative.share.apps.alforat.tags.Tags;
+import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -59,9 +71,26 @@ public class HomeActivity extends AppCompatActivity {
             DisplayFragmentMain();
         }
 
+        getDataFromIntent();
 
 
 
+    }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent!=null&&intent.hasExtra("notification"))
+        {
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            if (manager!=null)
+            {
+                manager.cancel("forat",0);
+
+            }
+
+            Intent intent1 = new Intent(this, PermissionsActivity.class);
+            startActivity(intent1);
+        }
     }
 
 
@@ -111,8 +140,71 @@ public class HomeActivity extends AppCompatActivity {
             return false;
         });
 
+        if (userModel!=null)
+        {
+            updateToken();
+        }
 
     }
+
+    private void updateToken() {
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId().addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                    {
+                        if (task.getResult()!=null)
+                        {
+                            String token = task.getResult().getToken();
+
+                            try {
+
+                                Api.getService(Tags.base_url)
+                                        .updateToken(userModel.getToken(),token)
+                                        .enqueue(new Callback<ResponseBody>() {
+                                            @Override
+                                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                if (response.isSuccessful() && response.body() != null )
+                                                {
+                                                    Log.e("token","updated successfully");
+                                                } else {
+                                                    try {
+
+                                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                try {
+
+                                                    if (t.getMessage() != null) {
+                                                        Log.e("error", t.getMessage());
+                                                        if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                                            Toast.makeText(HomeActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(HomeActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+
+                                                } catch (Exception e) {
+                                                }
+                                            }
+                                        });
+                            } catch (Exception e) {
+
+
+                            }
+                        }
+
+
+                    }
+                });
+    }
+
     private void setUpBottomNavigation()
     {
 

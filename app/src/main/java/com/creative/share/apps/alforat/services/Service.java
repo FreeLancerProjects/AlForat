@@ -127,4 +127,11 @@ public interface Service {
     );
 
 
+    @FormUrlEncoded
+    @POST("Api/updateToken")
+    Call<ResponseBody> updateToken(@Header("Authorization") String user_token,
+                                   @Field("firebase_token") String firebase_token
+    );
+
+
 }

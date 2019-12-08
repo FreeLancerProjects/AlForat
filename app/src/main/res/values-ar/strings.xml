@@ -150,7 +150,7 @@
     <string name="ch_item">إختر الصنف</string>
     <string name="ch_center">إختر مركز التكلفة</string>
     <string name="ch_price">إختر السعر</string>
-    <string name="inv_amount">كمية غير صحيحة</string>
+    <string name="inv_amount">الرصيد الموجود بالمخزن غير كافي, الكمية المتاحة هي :</string>
     <string name="in_tax">قيمة الضريبة غير صحيحة</string>
     <string name="ch_disc">إختر الخصم</string>
     <string name="un_def">غير محدد</string>

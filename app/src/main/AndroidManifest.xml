@@ -21,6 +21,14 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
+        <service
+            android:name=".notification.FireBaseMessaging"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".activities_fragment.activity_charge_details.ChargeDetailsActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
@@ -54,10 +62,7 @@
             android:name=".activities_fragment.activity_store.StoreActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity
-            android:name=".activities_fragment.activity_create_bill.CreateBillActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
         <activity
             android:name=".activities_fragment.activity_expenses.ExpensesActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
